@@ -77,5 +77,9 @@ func fileManager() {
 		return
 	}
 	fmt.Println("file name is ", info.Name(), ", ", info.ModTime())
-
+	writeString, err := file.WriteString("append this data")
+	if err != nil {
+		fmt.Println(" error while appending data, ", err)
+	}
+	fmt.Println("writeString=", writeString)
 }
