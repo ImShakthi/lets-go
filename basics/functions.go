@@ -1,6 +1,9 @@
 package basics
 
-import "fmt"
+import (
+	"fmt"
+	"os"
+)
 
 func Init() {
 	fmt.Println(">>>>> FUNCTIONS <<<<<")
@@ -8,6 +11,7 @@ func Init() {
 	fmt.Println("Factorial of 5=", Factorial(5))
 	closure()
 	checkDefer()
+	fileManager()
 	panicRecover()
 }
 
@@ -58,4 +62,19 @@ func panicRecover() {
 	panic("AIYOOOOO RAMA PANIC DA!!!!")
 	//recoverMsg := recover()
 	//fmt.Println(recoverMsg)
+}
+
+func fileManager() {
+	file, err := os.Open("text.txt")
+	if err != nil {
+		fmt.Println("error while opening file, ", err)
+	}
+	defer file.Close()
+
+	info, err := file.Stat()
+	if err != nil {
+		fmt.Println("error while getting file stat, ", err)
+		return
+	}
+	fmt.Println("file name is ", info.Name())
 }

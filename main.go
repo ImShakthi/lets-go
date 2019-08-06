@@ -10,4 +10,5 @@ func main() {
 
 	//concurrency.Init()
 	basics.Init()
+	basics.InitCorePkg()
 }
