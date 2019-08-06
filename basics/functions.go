@@ -65,7 +65,7 @@ func panicRecover() {
 }
 
 func fileManager() {
-	file, err := os.Open("text.txt")
+	file, err := os.Open("/Users/sakthivel/go/src/lets-go/basics/text.txt")
 	if err != nil {
 		fmt.Println("error while opening file, ", err)
 	}
@@ -76,5 +76,6 @@ func fileManager() {
 		fmt.Println("error while getting file stat, ", err)
 		return
 	}
-	fmt.Println("file name is ", info.Name())
+	fmt.Println("file name is ", info.Name(), ", ", info.ModTime())
+
 }
