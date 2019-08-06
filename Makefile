@@ -67,7 +67,7 @@ clean:
 	$(GOBIN) clean -r -cache -testcache
 	rm -rf $(APP_EXECUTABLE) $(REPORTS_DIR)/* $(PERF_REPORTS_DIR) /generated_mocks *.out *.log
 
-run: compile ## Build and start app locally (outside docker)
+run: fmt compile ## Build and start app locally (outside docker)
 	echo "Running app.."
 	$(APP_EXECUTABLE)
 

@@ -8,4 +8,3 @@ import (
 func TestInit(t *testing.T) {
 	concurrency.Init()
 }
-
