@@ -1,7 +1,12 @@
 package main
 
-import( "fmt")
+import (
+	"fmt"
+	"lets-go/concurrency"
+)
 
-func main(){
+func main() {
 	fmt.Println("Lets go")
+
+	concurrency.Init()
 }

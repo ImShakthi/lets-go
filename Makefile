@@ -20,10 +20,10 @@ APP_EXECUTABLE=./$(BIN_DIR)/$(APP)
 REPORTS_DIR=reports
 PERF_REPORTS_DIR=perf-reports
 
-PROTOCOL?=https
-PORT?=8000
-HOSTNAME?=localhost
-APP_URL=$(PROTOCOL)://$(HOSTNAME):$(PORT)/
+#PROTOCOL?=https
+#PORT?=8000
+#HOSTNAME?=localhost
+#APP_URL=$(PROTOCOL)://$(HOSTNAME):$(PORT)/
 
 ifeq ($(RICHGO),)
 	GOBIN=go
@@ -68,9 +68,10 @@ clean:
 	rm -rf $(APP_EXECUTABLE) $(REPORTS_DIR)/* $(PERF_REPORTS_DIR) /generated_mocks *.out *.log
 
 run: compile ## Build and start app locally (outside docker)
-	GIN_MODE=debug PORT=$(PORT) $(APP_EXECUTABLE)
+	echo "Running app.."
+	$(APP_EXECUTABLE)
 
-build: fmt test analyze compile
+build: fmt test analyze generate-docs compile
 
 fmt: ## Run the code formatter
 	$(GOBIN) fmt $(ALL_PACKAGES)
@@ -79,7 +80,8 @@ test: generate-docs generate-mocks ## Run tests
 	mkdir -p $(REPORTS_DIR)
 	GIN_MODE=test $(GOBIN) test $(ALL_PACKAGES) -v -coverprofile ./$(REPORTS_DIR)/coverage
 
-compile: generate-docs ## Build the app
+compile: ## Build the app
+	echo "Building binaries..."
 	$(GOBIN) build -i -o $(APP_EXECUTABLE)
 
 
