@@ -4,14 +4,14 @@ import "fmt"
 
 func Init() {
 	fmt.Println(">>>>> FUNCTIONS <<<<<")
-	fmt.Println("Sum= ", add(1, 2, 3, 4, 5))
-	fmt.Println("factorial of 5=", factorial(5))
+	fmt.Println("Sum= ", Add(1, 2, 3, 4, 5))
+	fmt.Println("Factorial of 5=", Factorial(5))
 	closure()
 	checkDefer()
 	panicRecover()
 }
 
-func add(numbers ...int) int {
+func Add(numbers ...int) int {
 	total := 0
 	for _, number := range numbers {
 		total += number
@@ -19,11 +19,11 @@ func add(numbers ...int) int {
 	return total
 }
 
-func factorial(n int) int {
+func Factorial(n int) int {
 	if n == 0 {
 		return 1
 	}
-	return n * factorial(n-1)
+	return n * Factorial(n-1)
 }
 
 // closure

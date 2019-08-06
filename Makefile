@@ -89,8 +89,6 @@ generate-mocks: ## Generate mocks to be used only for unit testing
 	rm -rf ./generated_mocks
 	mkdir -p ./generated_mocks
 	# Application mocks
-	mockgen -source=./controllers/hello.go -destination=./generated_mocks/hello.go -package=generated_mocks
-	mockgen -source=./services/hello.go -destination=./generated_mocks/hello.go -package=generated_mocks
 
 analyze: generate-docs lint gosec
 
