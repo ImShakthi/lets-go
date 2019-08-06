@@ -2,11 +2,12 @@ package main
 
 import (
 	"fmt"
-	"lets-go/concurrency"
+	"lets-go/basics"
 )
 
 func main() {
 	fmt.Println("Lets go")
 
-	concurrency.Init()
+	//concurrency.Init()
+	basics.Init()
 }
