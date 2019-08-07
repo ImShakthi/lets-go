@@ -2,7 +2,7 @@
 all: help
 
 APP=goland
-ALL_PACKAGES=$(shell go list ./... | grep -v "vendor")
+ALL_PACKAGES=$(shell go list ./...)
 VERSION?=1.0
 
 BUILD?=$(shell git describe --tags --always --dirty)
@@ -12,18 +12,12 @@ GOSEC:=$(shell command -v gosec 2> /dev/null)
 GLICE:=$(shell command -v glice 2> /dev/null)
 GOJUNITCOVER:=$(shell command -v go-junit-report 2> /dev/null)
 GOMOCKGEN:=$(shell command -v mockgen 2> /dev/null)
-SWAGGER:=$(shell command -v swagger 2> /dev/null)
 RICHGO=$(shell command -v richgo 2> /dev/null)
 
 BIN_DIR=bin
 APP_EXECUTABLE=./$(BIN_DIR)/$(APP)
 REPORTS_DIR=reports
 PERF_REPORTS_DIR=perf-reports
-
-#PROTOCOL?=https
-#PORT?=8000
-#HOSTNAME?=localhost
-#APP_URL=$(PROTOCOL)://$(HOSTNAME):$(PORT)/
 
 ifeq ($(RICHGO),)
 	GOBIN=go
@@ -52,10 +46,6 @@ ifndef GOMOCKGEN
 	$(GOBIN) get github.com/golang/mock/gomock
 	$(GOBIN) install github.com/golang/mock/mockgen
 endif
-ifndef SWAGGER
-	curl -sfL https://github.com/go-swagger/go-swagger/releases/download/v0.19.0/swagger_linux_amd64 -o $(GOPATH)/bin/swagger
-	chmod +x $(GOPATH)/bin/swagger
-endif
 ifndef DELVE
 	CGO_ENABLED=1 $(GOBIN) get github.com/go-delve/delve/cmd/dlv
 endif
@@ -71,12 +61,12 @@ run: fmt compile ## Build and start app locally (outside docker)
 	echo "Running app.."
 	$(APP_EXECUTABLE)
 
-build: fmt test analyze generate-docs compile
+build: fmt test analyze compile
 
 fmt: ## Run the code formatter
 	$(GOBIN) fmt $(ALL_PACKAGES)
 
-test: generate-docs generate-mocks ## Run tests
+test: generate-mocks ## Run tests
 	mkdir -p $(REPORTS_DIR)
 	GIN_MODE=test $(GOBIN) test $(ALL_PACKAGES) -v -coverprofile ./$(REPORTS_DIR)/coverage
 
@@ -90,11 +80,7 @@ generate-mocks: ## Generate mocks to be used only for unit testing
 	mkdir -p ./generated_mocks
 	# Application mocks
 
-analyze: generate-docs lint gosec
-
-generate-docs:  ## Generates the static files to be embedded into the application + swagger.json
-	mkdir -p bin 2> /dev/null
-	swagger generate spec -b ./ -o ./bin/swagger.json --scan-models
+analyze: lint gosec
 
 lint: ## Run the code linter
 	golangci-lint run
