@@ -2,6 +2,7 @@ package concurrency
 
 import (
 	"fmt"
+	"math/rand"
 	"time"
 )
 
@@ -19,10 +20,25 @@ func Init() {
 
 	testSelect()
 
+	testChannel()
+
 	var input string
 	fmt.Scanln(&input)
 
 	fmt.Print(input)
+}
+
+func testChannel() {
+	done := make(chan bool)
+	fmt.Println("Start go routine")
+	go sayHello(done)
+	fmt.Println("Did say hello run ? ", <-done)
+}
+
+func sayHello(done chan bool) {
+	fmt.Println("In say hello go routine")
+	time.Sleep(time.Second * 10)
+	done <- true
 }
 
 func testSelect() {
@@ -60,14 +76,14 @@ func testSelect() {
 	}()
 }
 
-//func printer(name string) {
-//	for i := 0; i < 5; i++ {
-//		fmt.Println(i, "->", name, ", ")
-//
-//		amt := time.Duration(rand.Intn(250))
-//		time.Sleep(time.Millisecond * amt)
-//	}
-//}
+func namePrinter(name string) {
+	for i := 0; i < 5; i++ {
+		fmt.Println(i, "->", name, ", ")
+
+		amt := time.Duration(rand.Intn(250))
+		time.Sleep(time.Millisecond * amt)
+	}
+}
 
 func senderChannel(c chan<- string) {
 	for i := 0; ; i++ {

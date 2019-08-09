@@ -5,6 +5,11 @@ import (
 	"fmt"
 )
 
+type Student struct {
+	Name    string `json:"name" binding:"required"`
+	Checked bool   `json:"checked" binding:"required"`
+}
+
 func InitCorePkg() {
 	fmt.Println(">>>> CORE PACKAGES <<<")
 	i, e := ioFunc("test")
