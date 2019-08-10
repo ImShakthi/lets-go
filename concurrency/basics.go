@@ -7,25 +7,94 @@ import (
 )
 
 func Init() {
-	fmt.Print(">>> Concurrency <<<")
+	fmt.Println(">>> Concurrency <<<")
 
-	c := make(chan string)
+	//testFibo()
+	//
+	//c := make(chan string)
+	//
+	//go messengerPing(c)
+	//go messengerPong(c)
+	//go senderChannel(c)
+	//go printer(c, 1)
+	//go printer(c, 2)
+	//go printer2(c)
+	//
+	//testSelect()
+	//testChannel()
 
-	go messengerPing(c)
-	go messengerPong(c)
-	go senderChannel(c)
-	go printer(c, 1)
-	go printer(c, 2)
-	go printer2(c)
+	//tikTok()
 
-	testSelect()
-
-	testChannel()
+	test()
 
 	var input string
 	fmt.Scanln(&input)
 
 	fmt.Print(input)
+}
+
+func test() {
+	c := make(chan int)
+	go input(c)
+	go print(c)
+}
+
+func input(c chan int) {
+	for i := 0; i < 5; i++ {
+		c <- i
+	}
+}
+
+func print(c chan int) {
+	for {
+		fmt.Println("-> ", <-c)
+		time.Sleep(time.Second)
+	}
+}
+
+func tikTok() {
+	tick := time.Tick(time.Second)
+	boom := time.After(time.Second * 5)
+	for {
+		select {
+		case <-tick:
+			fmt.Print("tick")
+		case <-boom:
+			fmt.Println("\nboom!")
+			return
+		default:
+			fmt.Print(".")
+			time.Sleep(time.Millisecond * 100)
+		}
+	}
+}
+
+func testFibo() {
+	fmt.Println(" TEST FIBO ")
+	n := make(chan int, 2)
+	quit := make(chan bool)
+
+	go func() {
+		for i := 0; i < 10; i++ {
+			fmt.Println(<-n)
+		}
+		quit <- true
+	}()
+	fibo(n, quit)
+}
+
+func fibo(n chan int, quit chan bool) {
+	x, y := 0, 1
+	for {
+		select {
+		case n <- x:
+			//fmt.Printf("\nx=%v", x)
+			x, y = y, x+y
+		case <-quit:
+			fmt.Println("quit")
+			return
+		}
+	}
 }
 
 func testChannel() {
