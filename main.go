@@ -2,12 +2,13 @@ package main
 
 import (
 	"fmt"
-	"lets-go/concurrency"
+	"lets-go/snippets"
 )
 
 func main() {
 	fmt.Println("Lets go...")
-	concurrency.Init()
+	//concurrency.Init()
 	//basics.Init()
 	//basics.InitCorePkg()
+	snippets.TomlParserInit()
 }

@@ -6,4 +6,3 @@ func InitTree() {
 	fmt.Println(" TREES ")
 
 }
-
