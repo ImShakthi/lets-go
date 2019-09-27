@@ -10,5 +10,8 @@ func main() {
 	//concurrency.Init()
 	//basics.Init()
 	//basics.InitCorePkg()
-	snippets.TomlParserInit()
+	//snippets.NewTomlParser()
+
+	errorHandler := snippets.NewErrorHandler()
+	errorHandler.Play()
 }

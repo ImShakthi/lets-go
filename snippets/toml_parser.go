@@ -6,7 +6,7 @@ import (
 	"lets-go/models"
 )
 
-func TomlParserInit() {
+func NewTomlParser() {
 	var config models.Config
 	if _, err := toml.DecodeFile("config.toml", &config); err != nil {
 		fmt.Println(err)
