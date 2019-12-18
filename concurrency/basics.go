@@ -2,63 +2,34 @@ package concurrency
 
 import (
 	"fmt"
-	"math/rand"
+	"sync"
 	"time"
 )
 
-func Init() {
-	fmt.Println(">>> Concurrency <<<")
-
-	//testFibo()
-	//
-	//c := make(chan string)
-	//
-	//go messengerPing(c)
-	//go messengerPong(c)
-	//go senderChannel(c)
-	//go printer(c, 1)
-	//go printer(c, 2)
-	//go printer2(c)
-	//
-	//testSelect()
-	//testChannel()
-
-	//tikTok()
-
-	test()
-
-	var input string
-	fmt.Scanln(&input)
-
-	fmt.Print(input)
+func ChanneledPrinter() {
+	c := make(chan string)
+	go senderChannel(c)
+	go printer(c)
 }
 
-func test() {
-	c := make(chan int)
-	go input(c)
-	go print(c)
+func PingPongMessenger() {
+	wg := new(sync.WaitGroup)
+	c := make(chan string, 5)
+	wg.Add(1)
+	go messengerPing(c, wg)
+	wg.Add(1)
+	go messengerPong(c, wg)
+	go printer(c)
+	wg.Wait()
 }
 
-func input(c chan int) {
-	for i := 0; i < 5; i++ {
-		c <- i
-	}
-}
-
-func print(c chan int) {
-	for {
-		fmt.Println("-> ", <-c)
-		time.Sleep(time.Second)
-	}
-}
-
-func tikTok() {
+func TikTok() {
 	tick := time.Tick(time.Second)
 	boom := time.After(time.Second * 5)
 	for {
 		select {
 		case <-tick:
-			fmt.Print("tick")
+			fmt.Println("\ntick")
 		case <-boom:
 			fmt.Println("\nboom!")
 			return
@@ -69,8 +40,8 @@ func tikTok() {
 	}
 }
 
-func testFibo() {
-	fmt.Println(" TEST FIBO ")
+func ChannelFibonacci() {
+	fmt.Println(" Fibonacci using channel ")
 	n := make(chan int, 2)
 	quit := make(chan bool)
 
@@ -97,7 +68,7 @@ func fibo(n chan int, quit chan bool) {
 	}
 }
 
-func testChannel() {
+func ImplementChannel() {
 	done := make(chan bool)
 	fmt.Println("Start go routine")
 	go sayHello(done)
@@ -110,7 +81,7 @@ func sayHello(done chan bool) {
 	done <- true
 }
 
-func testSelect() {
+func ImplementSelect() {
 
 	c1 := make(chan string, 3)
 	c2 := make(chan string, 5)
@@ -145,43 +116,28 @@ func testSelect() {
 	}()
 }
 
-func namePrinter(name string) {
-	for i := 0; i < 5; i++ {
-		fmt.Println(i, "->", name, ", ")
-
-		amt := time.Duration(rand.Intn(250))
-		time.Sleep(time.Millisecond * amt)
-	}
-}
-
 func senderChannel(c chan<- string) {
 	for i := 0; ; i++ {
 		c <- "directed"
 	}
 }
 
-func messengerPing(c chan string) {
-	for i := 0; ; i++ {
+func messengerPing(c chan string, wg *sync.WaitGroup) {
+	for i := 0; i < 5; i++ {
 		c <- "ping"
 	}
+	wg.Done()
 }
 
-func messengerPong(c chan string) {
-	for i := 0; ; i++ {
+func messengerPong(c chan string, wg *sync.WaitGroup) {
+	for i := 0; i < 5; i++ {
 		c <- "pong"
 	}
+	wg.Done()
 }
 
-func printer(c chan string, id int) {
+func printer(c chan string) {
 	for {
-		fmt.Println("id=", id, ", ", <-c)
-		time.Sleep(time.Second * 1)
-	}
-}
-
-func printer2(c chan string) {
-	for {
-		fmt.Println("second printer=", <-c)
-		time.Sleep(time.Second * 1)
+		fmt.Println(<-c)
 	}
 }
