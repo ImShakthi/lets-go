@@ -141,3 +141,14 @@ func printer(c chan string) {
 		fmt.Println(<-c)
 	}
 }
+
+func NamePrinter() {
+	for i := 0; i < 5; i++ {
+		go printMyName(fmt.Sprintf("Billa %v", i))
+	}
+
+}
+
+func printMyName(name string) {
+	println("My name is " + name)
+}

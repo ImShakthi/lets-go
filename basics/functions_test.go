@@ -77,3 +77,4 @@ func TestFactorial(t *testing.T) {
 		})
 	}
 }
+

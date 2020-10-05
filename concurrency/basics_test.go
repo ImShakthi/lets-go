@@ -28,3 +28,7 @@ func TestImplementChannel(t *testing.T) {
 func TestTikTok(t *testing.T) {
 	concurrency.TikTok()
 }
+
+func TestNamePrinter(t *testing.T) {
+	concurrency.NamePrinter()
+}
