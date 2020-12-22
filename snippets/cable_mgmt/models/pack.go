@@ -13,3 +13,7 @@ type Pack struct {
 	Type  PackType
 	Price float64
 }
+
+func (p Pack) UpdatePrice(price float64) {
+	p.Price = price
+}
