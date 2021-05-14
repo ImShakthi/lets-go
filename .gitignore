@@ -4,6 +4,7 @@
 
 .envrc
 .idea
+covid19/covid19
 
 ### Go ###
 # Binaries for programs and plugins
