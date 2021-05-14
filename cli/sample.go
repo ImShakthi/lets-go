@@ -19,3 +19,7 @@ func main() {
 
 	fmt.Printf("textPtr: %s, metricPtr: %s, uniquePtr: %t\n", *textPtr, *metricPtr, *uniquePtr)
 }
+
+func isEven(n int) bool {
+	return n%2 == 0
+}
