@@ -10,8 +10,22 @@ import (
 	"time"
 )
 
+func GetResults() {
+	slotResp, err := GetSlotResponse()
+	if err != nil {
+		fmt.Printf("error in getting response: %+v", err)
+		return
+	}
+	results := slotResp.GetResults()
+	fmt.Println(results.SlotDates)
+	for _, info := range results.SlotInfo {
+		fmt.Println(info)
+	}
+
+}
+
 func CheckSlots() {
-	slotResp, err := getSlotResponse()
+	slotResp, err := GetSlotResponse()
 	if err != nil {
 		fmt.Printf("error in getting response: %+v", err)
 		return
@@ -19,7 +33,7 @@ func CheckSlots() {
 	slotResp.GetSlotAvailHospital()
 }
 
-func getSlotResponse() (models.CheckSlotResponse, error) {
+func GetSlotResponse() (models.CheckSlotResponse, error) {
 	client := resty.New()
 
 	url := getURL()

@@ -6,6 +6,6 @@ import (
 
 func main() {
 	fmt.Println("Check for available slots started...")
-	CheckSlots()
+	GetResults()
 	fmt.Println("Check for available slots ended :)")
 }
