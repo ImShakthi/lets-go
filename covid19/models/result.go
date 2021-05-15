@@ -1,6 +1,6 @@
 package models
 
 type Result struct {
-	SlotDates []string
-	SlotInfo  []string
+	SlotDates []string `json:"slot_dates"`
+	SlotInfo  []string `json:"slot_info"`
 }

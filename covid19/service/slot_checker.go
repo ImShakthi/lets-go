@@ -1,4 +1,4 @@
-package main
+package service
 
 import (
 	"encoding/json"
@@ -10,11 +10,13 @@ import (
 	"time"
 )
 
-func GetResults() {
+func GetResults() models.Result {
 	slotResp, err := GetSlotResponse()
 	if err != nil {
 		fmt.Printf("error in getting response: %+v", err)
-		return
+		return models.Result{
+
+		}
 	}
 	fmt.Println("--------------------------------------")
 	results := slotResp.GetResults()
@@ -29,7 +31,7 @@ func GetResults() {
 		fmt.Println(info)
 	}
 	fmt.Println("--------------------------------------")
-
+	return results
 }
 
 func CheckSlots() {
