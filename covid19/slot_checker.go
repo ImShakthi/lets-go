@@ -16,11 +16,19 @@ func GetResults() {
 		fmt.Printf("error in getting response: %+v", err)
 		return
 	}
+	fmt.Println("--------------------------------------")
 	results := slotResp.GetResults()
 	fmt.Println(results.SlotDates)
+
+	fmt.Println("--------------------------------------")
+	if len(results.SlotInfo) == 0 {
+		fmt.Println("NO SLOTS available!!!")
+	}
+
 	for _, info := range results.SlotInfo {
 		fmt.Println(info)
 	}
+	fmt.Println("--------------------------------------")
 
 }
 
