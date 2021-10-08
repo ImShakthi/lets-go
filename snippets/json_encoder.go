@@ -13,6 +13,7 @@ func JsonEncoder() {
 				Key:          "key1",
 				Value:        []byte("value 1"),
 				Json:         []byte(`{"key":"name","value":"sakthi"}`),
+				Names:        []string{"n1", "n2"},
 			},
 		},
 	}
@@ -34,4 +35,5 @@ type header struct {
 	Key          string   `json:"key"`
 	Value        []byte   `json:"value"`
 	Json         []byte   `json:"json"`
+	Names        []string `json:"names"`
 }
