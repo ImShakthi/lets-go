@@ -1,34 +1,34 @@
-package concurrency_test
+package examples_test
 
 import (
-	"lets-go/concurrency"
+	"lets-go/concurrency/examples"
 	"testing"
 )
 
 func TestChannelFibonacci(t *testing.T) {
-	concurrency.ChannelFibonacci()
+	examples.ChannelFibonacci()
 }
 
 func TestPingPongMessenger(t *testing.T) {
-	concurrency.PingPongMessenger()
+	examples.PingPongMessenger()
 }
 
 func TestChanneledPrinter(t *testing.T) {
-	concurrency.ChanneledPrinter()
+	examples.ChanneledPrinter()
 }
 
 func TestImplementSelect(t *testing.T) {
-	concurrency.ImplementSelect()
+	examples.ImplementSelect()
 }
 
 func TestImplementChannel(t *testing.T) {
-	concurrency.ImplementChannel()
+	examples.ImplementChannel()
 }
 
 func TestTikTok(t *testing.T) {
-	concurrency.TikTok()
+	examples.TikTok()
 }
 
 func TestNamePrinter(t *testing.T) {
-	concurrency.NamePrinter()
+	examples.NamePrinter()
 }
