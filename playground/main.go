@@ -3,7 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
-	"github.com/imshakthi/lets-go/playground/account"
+	"lets-go/playground/account"
 )
 
 func main() {
@@ -32,13 +32,9 @@ func getAccount(ctx context.Context, req request) response {
 	//req.Validate()
 	sReq := account.Request{AccountID: req.AccountID}
 
-
 	sResp := getResponse(sReq)
 
 	holdings := transform(sResp.Holdings)
-
-
-
 
 	return response{
 		Status:  "d",
