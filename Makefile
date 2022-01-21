@@ -89,4 +89,6 @@ gosec:
 	mkdir -p $(REPORTS_DIR)
 	echo 'gosec -fmt=text -out=$(REPORTS_DIR)/gosec-report.txt ./...'
 
+send_msg:
+	go run conf_kafka.go -broker=$(broker) -topic=$(topic) -data=$(data) -header=$(header) -file=$(file)
 

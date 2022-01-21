@@ -15,7 +15,7 @@ example
 go run main.go -broker 127.0.0.1 -topic test-topic-name -data '{"msg":"hello"}'
 */
 
-func main() {
+func produceMessage() {
 	broker := flag.String("broker", "127.0.0.1", "broker IP addr")
 	topic := flag.String("topic", "", "kafka topic name")
 	value := flag.String("data", "", "payload data")
@@ -23,7 +23,11 @@ func main() {
 	headerData := flag.String("header", "", "header data")
 	flag.Parse()
 
-	if *help {
+	produceMsg(*broker, *topic, *value, *help, *headerData)
+}
+
+func produceMsg(broker string, topic string, value string, help bool, headerData string) {
+	if help {
 		helpline := `go run main.go -broker <ip-addr> -topic <topic-name> -data '<sample data>' -header '[{"key":"k1","value":"v1"},{"key":"k2","value":"v2"}]'
 -broker, -topic, -data are mandatory flags 
 Example: go run main.go -broker 127.0.0.1 -topic test-topic-name -data '{"msg":"hello"}'`
@@ -32,25 +36,25 @@ Example: go run main.go -broker 127.0.0.1 -topic test-topic-name -data '{"msg":"
 		os.Exit(0)
 	}
 
-	if len(*topic) == 0 {
+	if len(topic) == 0 {
 		fmt.Fprintf(os.Stderr, "topic can't be empty\n")
 		os.Exit(1)
 	}
 
-	if len(*value) == 0 {
+	if len(value) == 0 {
 		fmt.Fprintf(os.Stderr, "data can't be empty\n")
 		os.Exit(1)
 	}
 
-	if len(*value) == 0 {
+	if len(headerData) == 0 {
 		fmt.Fprintf(os.Stderr, "data can't be empty\n")
 		os.Exit(1)
 	}
 
 	var kafkaHeaders []kafka.Header
-	if len(*headerData) != 0 {
+	if len(headerData) != 0 {
 		var headers Headers
-		err := json.Unmarshal([]byte(*headerData), &headers)
+		err := json.Unmarshal([]byte(headerData), &headers)
 		if err != nil {
 			fmt.Fprintf(os.Stderr, "unable to parse header %+v\n", err)
 			os.Exit(1)
@@ -60,7 +64,7 @@ Example: go run main.go -broker 127.0.0.1 -topic test-topic-name -data '{"msg":"
 	fmt.Fprintf(os.Stdout, "kafkaHeaders= %+v\n", kafkaHeaders)
 
 	configMap := kafka.ConfigMap{
-		"bootstrap.servers": *broker,
+		"bootstrap.servers": broker,
 	}
 
 	p, err := kafka.NewProducer(&configMap)
@@ -75,8 +79,8 @@ Example: go run main.go -broker 127.0.0.1 -topic test-topic-name -data '{"msg":"
 	deliveryChan := make(chan kafka.Event)
 
 	message := kafka.Message{
-		TopicPartition: kafka.TopicPartition{Topic: topic, Partition: kafka.PartitionAny},
-		Value:          []byte(*value),
+		TopicPartition: kafka.TopicPartition{Topic: &topic, Partition: kafka.PartitionAny},
+		Value:          []byte(value),
 		Headers:        kafkaHeaders,
 	}
 	err = p.Produce(&message, deliveryChan)
