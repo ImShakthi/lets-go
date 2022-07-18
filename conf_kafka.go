@@ -17,7 +17,7 @@ go run main.go -broker 127.0.0.1 -topic test-topic-name -data '{"msg":"hello"}'
 go run main.go -broker 127.0.0.1 -topic test-topic-name -file '~/Desktop/data.json'`
 )
 
-func main() {
+func process() {
 	broker := flag.String("broker", "127.0.0.1", "broker IP addr")
 	topic := flag.String("topic", "", "kafka topic name")
 	data := flag.String("data", "", "payload data")
