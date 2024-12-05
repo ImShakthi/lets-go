@@ -74,7 +74,7 @@ var letterNumMap = map[string]int{
 
 type ATC []int
 
-var allowedTotalCounts = ATC{14, 21, 23, 39, 41, 50, 59}
+var allowedTotalCounts = ATC{5, 6}
 
 var suffixes = []string{"", "raj", "kumar"}
 
@@ -102,8 +102,8 @@ func PrintValidNames(names []string) {
 	for _, name := range names {
 		for _, suffix := range suffixes {
 			n := name + suffix
-			IsValidName("y" + n)
-			IsValidName("ay" + n)
+			IsValidName("k" + n)
+			IsValidName("ks" + n)
 		}
 		println()
 	}
@@ -117,9 +117,14 @@ func IsValidName(name string) bool {
 		count += letterNumMap[string(ch)]
 	}
 	//fmt.Printf("\ncount for %s is %d ", name, count)
-	in := allowedTotalCounts.In(count)
-	if in {
-		fmt.Printf("\n%s -> %d -> %v", name, count, in)
-	}
-	return in
+	//in := allowedTotalCounts.In(count)
+	//if in {
+	fmt.Printf("\n%s -> %d -> %v", name, count, true)
+	//}
+	return true
+}
+
+func sumOfNumber() int {
+
+	return 0
 }

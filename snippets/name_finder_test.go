@@ -7,7 +7,14 @@ func TestPrintMatchingNames(t *testing.T) {
 }
 
 func TestIsValidName(t *testing.T) {
-	names := []string{"mogil", "monesh", "mohin", "Darshit", "mohit", "Darshan", "mohith","Danush","dhyan", "deena", "monish"}
+	names := []string{
+		"Viyaan",
+		"Vihan",
+		"Vivin",
+		"Veera",
+		"Veeramani",
+		"Vivek",
+	}
 	PrintValidNames(names)
 	println()
 }

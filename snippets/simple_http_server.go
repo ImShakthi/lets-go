@@ -1,4 +1,4 @@
-package main
+package snippets
 
 import (
 	"net/http"
