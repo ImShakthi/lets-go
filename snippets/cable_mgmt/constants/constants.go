@@ -7,6 +7,6 @@ var (
 	ErrRequestedPackNotAvailable       = fmt.Errorf("requested pack not available")
 	ErrInsufficientBalance             = fmt.Errorf("insufficent balance")
 	ErrAlreadySubscribed               = fmt.Errorf("already subscribed to the channel")
-	ErrPackAlreadySubscribed               = fmt.Errorf("already subscribed to the pack")
+	ErrPackAlreadySubscribed           = fmt.Errorf("already subscribed to the pack")
 	ErrRequestedChannelIsNotSubscribed = fmt.Errorf("requested channel is not subscribed")
 )
