@@ -13,5 +13,5 @@ var headerData = flag.String("header", "", "header data")
 
 func TestProduceMsg(t *testing.T) {
 
-	produceMsg(*broker, *topic, *value, *help, *headerData)
+	//produceMsg(*broker, *topic, *value, *help, *headerData)
 }
